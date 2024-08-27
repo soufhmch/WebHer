@@ -7,8 +7,7 @@ import { moviesInt } from "./interfaces";
 dotenv.config();
 
 const app: Express = express();
-const uri =
-  "mongodb+srv://sofianehammich:Sofiane.153@movies-db.moll4.mongodb.net/";
+const uri = `mongodb+srv://sofianehammich:${process.env.PASSWD}@movies-db.moll4.mongodb.net/`;
 const client = new MongoClient(uri);
 
 app.set("view engine", "ejs");
