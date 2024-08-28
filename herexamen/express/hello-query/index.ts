@@ -2,6 +2,7 @@ import express, { Express } from "express";
 import dotenv from "dotenv";
 import path from "path";
 import { name } from "ejs";
+import { exit } from "process";
 
 dotenv.config();
 
@@ -15,43 +16,46 @@ app.set("views", path.join(__dirname, "views"));
 
 app.set("port", process.env.PORT ?? 3000);
 
-app.get("/", (req, res) => {
+app.get("/:language", (req, res) => {
   let lang: any = req.query.lang;
+
+  console.log(req.params);
+
   if (req.query.lang) {
     lang = req.query.lang;
+    switch (lang) {
+      case "en":
+        res.render("index", {
+          title: "Hello World",
+          message: "Hello World",
+        });
+        break;
+      case "es":
+        res.render("index", {
+          title: "Hello World",
+          message: "Hola mundo",
+        });
+        break;
+      case "fr":
+        res.render("index", {
+          title: "Hello World",
+          message: "Bonjour monde",
+        });
+        break;
+
+      default:
+        res.render("index", {
+          title: "Hello World",
+          message: "Hello World",
+        });
+        break;
+    }
   } else {
     lang = "";
     res.render("index", {
       title: "Hello World",
       message: "Hello World",
     });
-  }
-  switch (lang) {
-    case "en":
-      res.render("index", {
-        title: "Hello World",
-        message: "Hello World",
-      });
-      break;
-    case "es":
-      res.render("index", {
-        title: "Hello World",
-        message: "Hola mundo",
-      });
-      break;
-    case "fr":
-      res.render("index", {
-        title: "Hello World",
-        message: "Bonjour monde",
-      });
-      break;
-
-    default:
-      res.render("index", {
-        title: "Hello World",
-        message: "Hello World",
-      });
-      break;
   }
 });
 
